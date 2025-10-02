@@ -1,5 +1,7 @@
 {
   "name": "Pill Identifier AI",
   "description": "An AI-powered web application that identifies medicines from images. It fetches detailed information from the openFDA database and uses a powerful AI fallback for medicines not found in the US database.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "camera"
+  ]
 }

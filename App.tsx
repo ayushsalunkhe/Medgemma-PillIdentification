@@ -52,6 +52,15 @@ const App: React.FC = () => {
     reader.readAsDataURL(file);
   };
 
+  const handleClearImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+    setOriginalMedicineInfo(null);
+    setMedicineInfo(null);
+    setError(null);
+    setDataSource(null);
+  };
+
   const processMedicineImage = useCallback(async () => {
     if (!imageFile) {
       setError("Please select an image first.");
@@ -189,7 +198,7 @@ const App: React.FC = () => {
         </div>
 
         <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-200">
-          <ImageUploader onImageSelect={handleImageSelect} imagePreview={imagePreview} language={language} />
+          <ImageUploader onImageSelect={handleImageSelect} onClearImage={handleClearImage} imagePreview={imagePreview} language={language} />
           
           <div className="mt-6">
             <button
