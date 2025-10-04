@@ -36,6 +36,15 @@
 </head>
   <body class="bg-gray-50">
     <div id="root"></div>
+    <script>
+      window.process = {
+        env: {
+          // This placeholder is replaced by the entrypoint.sh script in the Docker container
+          // at runtime with the value of the API_KEY environment variable.
+          API_KEY: ""
+        }
+      };
+    </script>
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>
