@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import type { MedicineInfo, SideEffectsInfo } from '../types';
-import { ChevronDownIcon } from './icons/ChevronDownIcon';
-import { FormattedContent } from './FormattedContent';
-import { PillIcon } from './icons/PillIcon';
-import { AlertTriangleIcon } from './icons/AlertTriangleIcon';
-import { ClockIcon } from './icons/ClockIcon';
-import { BanIcon } from './icons/BanIcon';
-import { ThermometerIcon } from './icons/ThermometerIcon';
-import { InfoIcon } from './icons/InfoIcon';
-import { SideEffectsChart } from './SideEffectsChart';
-import { useTranslations, LANGUAGES } from '../hooks/useTranslations';
-import { TranslationLoader } from './TranslationLoader';
+import type { MedicineInfo, SideEffectsInfo } from '../types.ts';
+import { ChevronDownIcon } from './icons/ChevronDownIcon.tsx';
+import { FormattedContent } from './FormattedContent.tsx';
+import { PillIcon } from './icons/PillIcon.tsx';
+import { AlertTriangleIcon } from './icons/AlertTriangleIcon.tsx';
+import { ClockIcon } from './icons/ClockIcon.tsx';
+import { BanIcon } from './icons/BanIcon.tsx';
+import { ThermometerIcon } from './icons/ThermometerIcon.tsx';
+import { InfoIcon } from './icons/InfoIcon.tsx';
+import { SideEffectsChart } from './SideEffectsChart.tsx';
+import { useTranslations, LANGUAGES } from '../hooks/useTranslations.ts';
+import { TranslationLoader } from './TranslationLoader.tsx';
 
 
 interface MedicineInfoCardProps {

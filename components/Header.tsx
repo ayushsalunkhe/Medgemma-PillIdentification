@@ -1,8 +1,7 @@
 import React from 'react';
-import { PillIcon } from './icons/PillIcon';
-import { LanguageSelector } from './LanguageSelector';
-import { useTranslations } from '../hooks/useTranslations';
-import { LANGUAGES } from '../hooks/useTranslations';
+import { PillIcon } from './icons/PillIcon.tsx';
+import { LanguageSelector } from './LanguageSelector.tsx';
+import { useTranslations, LANGUAGES } from '../hooks/useTranslations.ts';
 
 interface HeaderProps {
   language: string;

@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
-import { UploadIcon } from './icons/UploadIcon';
-import { CameraIcon } from './icons/CameraIcon';
-import { useTranslations, LANGUAGES } from '../hooks/useTranslations';
+import { UploadIcon } from './icons/UploadIcon.tsx';
+import { CameraIcon } from './icons/CameraIcon.tsx';
+import { useTranslations, LANGUAGES } from '../hooks/useTranslations.ts';
 
 interface ImageUploaderProps {
   onImageSelect: (file: File) => void;

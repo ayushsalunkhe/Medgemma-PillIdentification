@@ -1,5 +1,5 @@
 
-import type { FdaResult } from '../types';
+import type { FdaResult } from '../types.ts';
 
 const FDA_API_BASE_URL = 'https://api.fda.gov/drug/label.json';
 

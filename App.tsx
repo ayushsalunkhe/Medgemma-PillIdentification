@@ -1,13 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Header } from './components/Header';
-import { ImageUploader } from './components/ImageUploader';
-import { Loader } from './components/Loader';
-import { MedicineInfoCard } from './components/MedicineInfoCard';
-import { identifyAndCorrectMedicineName, getMedicineInfoFallback, summarizeFdaData, translateMedicineInfo } from './services/geminiService';
-import { fetchFdaData } from './services/fdaService';
-import type { MedicineInfo, FdaDataToSummarize } from './types';
-import { PillIcon } from './components/icons/PillIcon';
-import { useTranslations, LANGUAGES } from './hooks/useTranslations';
+import { Header } from './components/Header.tsx';
+import { ImageUploader } from './components/ImageUploader.tsx';
+import { Loader } from './components/Loader.tsx';
+import { MedicineInfoCard } from './components/MedicineInfoCard.tsx';
+import { identifyAndCorrectMedicineName, getMedicineInfoFallback, summarizeFdaData, translateMedicineInfo } from './services/geminiService.ts';
+import { fetchFdaData } from './services/fdaService.ts';
+import type { MedicineInfo, FdaDataToSummarize } from './types.ts';
+import { PillIcon } from './components/icons/PillIcon.tsx';
+import { useTranslations, LANGUAGES } from './hooks/useTranslations.ts';
 
 // Helper function to convert a file to a base64 string
 const fileToBase64 = (file: File): Promise<string> => {

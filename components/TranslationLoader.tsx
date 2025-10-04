@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslations, LANGUAGES } from '../hooks/useTranslations';
+import { useTranslations, LANGUAGES } from '../hooks/useTranslations.ts';
 
 interface TranslationLoaderProps {
     language: string;

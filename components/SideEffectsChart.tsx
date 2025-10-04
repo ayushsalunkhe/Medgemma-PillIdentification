@@ -1,6 +1,6 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import type { SideEffectChartItem } from '../types';
+import type { SideEffectChartItem } from '../types.ts';
 
 interface SideEffectsChartProps {
   data: SideEffectChartItem[];

@@ -1,17 +1,10 @@
-# Use the official Nginx image  from Docker Hub
 FROM nginx:1.25.3-alpine
 
-# Copy all application files to  the Nginx html directory
+# Install envsubst for environment variable substitution
+RUN apk add --no-cache gettext
+
+# Copy application files
 COPY . /usr/share/nginx/html
 
-# Copy the entrypoint  script
-COPY entrypoint.sh /entrypoint.sh
-
-# Make the entrypoint script executable
-RUN chmod  +x /entrypoint.sh
-
-# Set the entrypoint
-ENTRYPOINT ["/entrypoint.sh"]
-
- # The default command for the nginx image will be executed after the entrypoint script
-# CMD ["nginx", "- g", "daemon off;"]
+# Replace placeholder and start nginx in one command
+CMD /bin/sh -c "envsubst '\$API_KEY' < /usr/share/nginx/html/index.html > /usr/share/nginx/html/index.tmp.html && mv /usr/share/nginx/html/index.tmp.html /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"

@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from "@google/genai";
-import type { FallbackMedicineInfo, FdaDataToSummarize, SummarizedMedicineInfo, MedicineInfo } from '../types';
+import type { FallbackMedicineInfo, FdaDataToSummarize, SummarizedMedicineInfo, MedicineInfo } from '../types.ts';
 
 if (!process.env.API_KEY) {
     throw new Error("API_KEY environment variable is not set");

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { GlobeIcon } from './icons/GlobeIcon';
-import { ChevronDownIcon } from './icons/ChevronDownIcon';
-import { LANGUAGES } from '../hooks/useTranslations';
+import { GlobeIcon } from './icons/GlobeIcon.tsx';
+import { ChevronDownIcon } from './icons/ChevronDownIcon.tsx';
+import { LANGUAGES } from '../hooks/useTranslations.ts';
 
 interface LanguageSelectorProps {
     currentLanguage: string;
