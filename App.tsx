@@ -1,13 +1,21 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Header } from './components/Header';
 import { ImageUploader } from './components/ImageUploader';
 import { Loader } from './components/Loader';
 import { MedicineInfoCard } from './components/MedicineInfoCard';
+import UserConsultations from './components/UserConsultations';
 import { identifyAndCorrectMedicineName, getMedicineInfoFallback, summarizeFdaData, translateMedicineInfo } from './services/geminiService';
 import { fetchFdaData } from './services/fdaService';
 import type { MedicineInfo, FdaDataToSummarize } from './types';
 import { PillIcon } from './components/icons/PillIcon';
 import { useTranslations, LANGUAGES } from './hooks/useTranslations';
+import LoginPage from './components/LoginPage';
+import SignupPage from './components/SignupPage';
+import DoctorDashboard from './components/DoctorDashboard';
+import { auth } from './services/firebaseService';
+
+import { ChakraProvider } from '@chakra-ui/react';
 
 // Helper function to convert a file to a base64 string
 const fileToBase64 = (file: File): Promise<string> => {
@@ -19,7 +27,7 @@ const fileToBase64 = (file: File): Promise<string> => {
   });
 };
 
-const App: React.FC = () => {
+const MainApp: React.FC = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,6 +42,8 @@ const App: React.FC = () => {
   const [language, setLanguage] = useState<string>('en');
   
   const { t } = useTranslations(language as keyof typeof LANGUAGES);
+  const [user, setUser] = useState(auth.currentUser);
+  const userType = localStorage.getItem('userType');
 
   useEffect(() => {
     document.title = t('pageTitle');
@@ -222,7 +232,13 @@ const App: React.FC = () => {
 
         {medicineInfo && !isLoading && (
           <div className="mt-8">
-            <MedicineInfoCard info={medicineInfo} source={dataSource} language={language} isTranslating={isTranslating} />
+            <MedicineInfoCard 
+              info={medicineInfo} 
+              source={dataSource} 
+              language={language} 
+              isTranslating={isTranslating}
+              imagePreview={imagePreview}
+            />
           </div>
         )}
 
@@ -239,6 +255,99 @@ const App: React.FC = () => {
       </main>
     </div>
   );
+};
+
+const App: React.FC = () => {
+  const [userType, setUserType] = useState<string | null>(localStorage.getItem('userType'));
+
+  useEffect(() => {
+    // Listen for changes in userType
+    const handleStorageChange = () => {
+      setUserType(localStorage.getItem('userType'));
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
+  // Listen for auth state changes
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserType(localStorage.getItem('userType'));
+      } else {
+        setUserType(null);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const renderApp = () => {
+    console.log('Current userType:', userType); // Debug log
+    if (userType === 'doctor') {
+      return <DoctorDashboard />;
+    }
+    return <MainApp />;
+  };
+
+  return (
+    <ChakraProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route
+            path="/consultations"
+            element={
+              <RequireAuth>
+                <UserConsultations />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <RequireAuth>
+                {renderApp()}
+              </RequireAuth>
+            }
+          />
+        </Routes>
+      </Router>
+    </ChakraProvider>
+  );
+};
+
+// Authentication wrapper component
+const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState(auth.currentUser);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      setIsLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  const userType = localStorage.getItem('userType');
+  console.log('RequireAuth - userType:', userType); // Debug log
+
+  if (!userType || !['user', 'doctor'].includes(userType)) {
+    console.log('Invalid userType, redirecting to login'); // Debug log
+    localStorage.removeItem('userType');
+    return <Navigate to="/login" />;
+  }
+
+  return <>{children}</>;
 };
 
 export default App;

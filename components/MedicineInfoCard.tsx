@@ -11,6 +11,7 @@ import { InfoIcon } from './icons/InfoIcon';
 import { SideEffectsChart } from './SideEffectsChart';
 import { useTranslations, LANGUAGES } from '../hooks/useTranslations';
 import { TranslationLoader } from './TranslationLoader';
+import ConsultationRequest from './ConsultationRequest';
 
 
 interface MedicineInfoCardProps {
@@ -18,6 +19,7 @@ interface MedicineInfoCardProps {
   source: 'FDA' | 'MedGemma' | null;
   language: string;
   isTranslating: boolean;
+  imagePreview: string | null;
 }
 
 const AccordionItem: React.FC<{ title: string; content?: string[] | string | null; defaultOpen?: boolean; icon?: React.ReactNode; children?: React.ReactNode; }> = ({ title, content, defaultOpen = false, icon, children }) => {
@@ -56,7 +58,7 @@ const AccordionItem: React.FC<{ title: string; content?: string[] | string | nul
 };
 
 
-export const MedicineInfoCard: React.FC<MedicineInfoCardProps> = ({ info, source, language, isTranslating }) => {
+export const MedicineInfoCard: React.FC<MedicineInfoCardProps> = ({ info, source, language, isTranslating, imagePreview }) => {
     const { t } = useTranslations(language as keyof typeof LANGUAGES);
     const sideEffects = info.sideEffects;
     
@@ -120,6 +122,14 @@ export const MedicineInfoCard: React.FC<MedicineInfoCardProps> = ({ info, source
             <AccordionItem title={t('storage')} content={info.storage} icon={<ThermometerIcon className="w-5 h-5 text-gray-500" />} />
             <AccordionItem title={t('warnings')} content={info.warnings} icon={<AlertTriangleIcon className="w-5 h-5 text-gray-500" />} />
         </div>
+
+        {localStorage.getItem('userType') !== 'doctor' && (
+          <div className="mt-6">
+            <ConsultationRequest 
+              medicineInfo={info}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

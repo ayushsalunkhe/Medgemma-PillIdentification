@@ -9,9 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "@chakra-ui/radio": "^2.1.2",
+    "@chakra-ui/react": "^2.8.1",
+    "@chakra-ui/system": "^2.6.2",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@google/genai": "^1.21.0",
+    "firebase": "^12.4.0",
+    "framer-motion": "^10.18.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.9.4",
     "recharts": "^2.12.7"
   },
   "devDependencies": {
